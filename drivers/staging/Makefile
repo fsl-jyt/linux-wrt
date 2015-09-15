@@ -49,3 +49,4 @@ obj-$(CONFIG_FSL_DPA)           += fsl_qbman/
 obj-$(CONFIG_WILC1000)		+= wilc1000/
 obj-$(CONFIG_MOST)		+= most/
 obj-$(CONFIG_FSL_PPFE)		+= fsl_ppfe/
+obj-$(CONFIG_FSL_DPAA2)		+= fsl-dpaa2/
