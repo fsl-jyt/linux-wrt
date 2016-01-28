@@ -33,7 +33,7 @@
 		};
 		ramdisk@1 {
 			description = "LS1 Ramdisk";
-                        data = /incbin/("./fsl-image-core-ls1021atwr-wifi.rootfs.ext2.gz");
+                        data = /incbin/("./fsl-image-core-ls1043ardb-32b.ext2.gz");
 			type = "ramdisk";
 			arch = "arm";
 			os = "linux";
