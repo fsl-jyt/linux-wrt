@@ -17,5 +17,6 @@ static const char * const ls1043a_dt_compat[] __initconst = {
 };
 
 DT_MACHINE_START(LS1043A, "Freescale LS1043A")
+	.smp		= smp_ops(layerscape_smp_ops),
 	.dt_compat	= ls1043a_dt_compat,
 MACHINE_END
