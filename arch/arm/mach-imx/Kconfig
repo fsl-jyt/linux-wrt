@@ -612,6 +612,16 @@ endchoice
 
 endif
 
+config ARCH_LAYERSCAPE
+	bool "Freescale Layerscape SoC support"
+	select ARM_GIC
+	select HAVE_ARM_ARCH_TIMER
+	select PCI_LAYERSCAPE if PCI
+	select LS1_MSI if PCI_MSI
+
+	help
+	  This enables support for Freescale Layerscape SoC family.
+
 source "arch/arm/mach-imx/devices/Kconfig"
 
 endif
