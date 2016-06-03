@@ -617,6 +617,7 @@ config ARCH_LAYERSCAPE
 	select ARM_GIC
 	select HAVE_ARM_ARCH_TIMER
 	select PCI_LAYERSCAPE if PCI
+	select PCI_DOMAINS if PCI
 	select LS1_MSI if PCI_MSI
 
 	help
