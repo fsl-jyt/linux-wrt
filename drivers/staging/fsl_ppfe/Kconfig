@@ -1,0 +1,5 @@
+config FSL_PPFE
+	tristate "Freescale PPFE Driver"
+	default m
+	help
+	  only compiled as module !
