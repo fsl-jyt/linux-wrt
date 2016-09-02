@@ -1280,10 +1280,6 @@ static int fsl_qspi_probe(struct platform_device *pdev)
 		if (ret)
 			goto mutex_failed;
 
-		ret = mtd_device_register(mtd, NULL, 0);
-		if (ret)
-			goto mutex_failed;
-
 		/* Set the correct NOR size now. */
 		if (q->nor_size == 0) {
 			q->nor_size = mtd->size;
@@ -1313,6 +1309,16 @@ static int fsl_qspi_probe(struct platform_device *pdev)
 		goto last_init_failed;
 
 	fsl_qspi_clk_disable_unprep(q);
+
+	for (i = 0; i < q->nor_num; i++) {
+		/* skip the holes */
+		if (!q->has_second_chip)
+			i *= 2;
+
+		ret = mtd_device_register(&q->nor[i].mtd, NULL, 0);
+		if (ret)
+			goto last_init_failed;
+	}
 	return 0;
 
 last_init_failed:
