@@ -40,11 +40,16 @@
 #define AHCI_PORT_PHY_5_CFG	0x192c96a4
 #define AHCI_PORT_TRANS_CFG	0x08000025
 
+/* for ls1046a */
+#define LS1046A_PORT_PHY2	0x28184d1f
+#define LS1046A_PORT_PHY3	0x0e081509
+
 #define SATA_ECC_DISABLE	0x00020000
 
 enum ahci_qoriq_type {
 	AHCI_LS1021A,
 	AHCI_LS1043A,
+	AHCI_LS1046A,
 	AHCI_LS2080A,
 };
 
@@ -57,6 +62,7 @@ struct ahci_qoriq_priv {
 static const struct of_device_id ahci_qoriq_of_match[] = {
 	{ .compatible = "fsl,ls1021a-ahci", .data = (void *)AHCI_LS1021A},
 	{ .compatible = "fsl,ls1043a-ahci", .data = (void *)AHCI_LS1043A},
+	{ .compatible = "fsl,ls1046a-ahci", .data = (void *)AHCI_LS1046A},
 	{ .compatible = "fsl,ls2080a-ahci", .data = (void *)AHCI_LS2080A},
 	{},
 };
@@ -155,6 +161,13 @@ static int ahci_qoriq_phy_init(struct ahci_host_priv *hpriv)
 		writel(AHCI_PORT_PHY_3_CFG, reg_base + PORT_PHY3);
 		writel(AHCI_PORT_PHY_4_CFG, reg_base + PORT_PHY4);
 		writel(AHCI_PORT_PHY_5_CFG, reg_base + PORT_PHY5);
+		writel(AHCI_PORT_TRANS_CFG, reg_base + PORT_TRANS);
+		break;
+
+	case AHCI_LS1046A:
+		writel(AHCI_PORT_PHY_1_CFG, reg_base + PORT_PHY1);
+		writel(LS1046A_PORT_PHY2, reg_base + PORT_PHY2);
+		writel(LS1046A_PORT_PHY3, reg_base + PORT_PHY3);
 		writel(AHCI_PORT_TRANS_CFG, reg_base + PORT_TRANS);
 		break;
 
