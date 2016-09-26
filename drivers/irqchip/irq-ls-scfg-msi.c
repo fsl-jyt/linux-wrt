@@ -222,6 +222,7 @@ static const struct of_device_id ls_scfg_msi_id[] = {
 	{ .compatible = "fsl,ls1012a-msi", },
 	{ .compatible = "fsl,1s1021a-msi", },
 	{ .compatible = "fsl,1s1043a-msi", },
+	{ .compatible = "fsl,ls1046a-msi", },
 	{},
 };
 
