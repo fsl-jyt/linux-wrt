@@ -103,4 +103,6 @@ obj-$(CONFIG_SOC_LS1021A) += mach-ls1021a.o
 
 obj-$(CONFIG_ARCH_LAYERSCAPE) += mach-ls1043a.o
 
+obj-$(CONFIG_ARCH_LAYERSCAPE) += mach-layerscape.o
+
 obj-y += devices/
