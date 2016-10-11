@@ -45,6 +45,10 @@
 
 #include <linux/amba/bus.h>
 
+#ifdef CONFIG_PCI_LAYERSCAPE
+#include <../drivers/pci/host/pci-layerscape.h>
+#endif
+
 #include "io-pgtable.h"
 
 /* Maximum number of stream IDs assigned to a single device */
@@ -1352,6 +1356,23 @@ static int arm_smmu_init_platform_device(struct device *dev,
 static int arm_smmu_add_device(struct device *dev)
 {
 	struct iommu_group *group;
+#ifdef CONFIG_PCI_LAYERSCAPE
+	u16 sid;
+	u32 streamid;
+	struct pci_dev *pdev;
+	if (dev_is_pci(dev)) {
+		pdev = to_pci_dev(dev);
+
+		pci_for_each_dma_alias(pdev, __arm_smmu_get_pci_sid, &sid);
+		streamid = set_pcie_streamid_translation(pdev, sid);
+		if (~streamid == 0) {
+			return -ENODEV;
+		}
+
+		pdev->dev_flags |= PCI_DEV_FLAGS_DMA_ALIAS_DEVID;
+		pdev->dma_alias_devid = streamid;
+	}
+#endif
 
 	group = iommu_group_get_for_dev(dev);
 	if (IS_ERR(group))
