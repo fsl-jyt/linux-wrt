@@ -158,11 +158,16 @@ static void ls1021_pcie_host_init(struct pcie_port *pp)
 static int ls_pcie_link_up(struct pcie_port *pp)
 {
 	struct ls_pcie *pcie = to_ls_pcie(pp);
-	u32 state;
+	u32 state, offset;
 
-	state = (ioread32(pcie->lut + pcie->drvdata->lut_dbg) >>
-		 pcie->drvdata->ltssm_shift) &
-		 LTSSM_STATE_MASK;
+	if (of_get_property(pp->dev->of_node, "fsl,lut_diff", NULL))
+		offset = 0x407fc;
+	else
+		offset = PCIE_LUT_DBG;
+
+	state = (ioread32(pcie->lut + offset) >>
+			pcie->drvdata->ltssm_shift) &
+		LTSSM_STATE_MASK;
 
 	if (state < LTSSM_PCIE_L0)
 		return 0;
