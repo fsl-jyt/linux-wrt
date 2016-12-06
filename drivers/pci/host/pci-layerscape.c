@@ -158,9 +158,14 @@ static void ls1021_pcie_host_init(struct pcie_port *pp)
 static int ls_pcie_link_up(struct pcie_port *pp)
 {
 	struct ls_pcie *pcie = to_ls_pcie(pp);
-	u32 state;
+	u32 state, offset;
 
-	state = (ioread32(pcie->lut + pcie->drvdata->lut_dbg) >>
+        if (of_get_property(pp->dev->of_node, "fsl,lut_diff", NULL))
+                offset = 0x407fc;
+        else
+                offset = pcie->drvdata->lut_dbg;
+
+	state = (ioread32(pcie->lut + offset) >>
 		 pcie->drvdata->ltssm_shift) &
 		 LTSSM_STATE_MASK;
 
@@ -261,7 +266,6 @@ static const struct of_device_id ls_pcie_of_match[] = {
 	{ .compatible = "fsl,ls1046a-pcie", .data = &ls1046_drvdata },
 	{ .compatible = "fsl,ls1088a-pcie", .data = &ls1088_drvdata },
 	{ .compatible = "fsl,ls2080a-pcie", .data = &ls2080_drvdata },
-	{ .compatible = "fsl,ls2085a-pcie", .data = &ls2080_drvdata },
 	{ },
 };
 MODULE_DEVICE_TABLE(of, ls_pcie_of_match);
@@ -315,8 +319,7 @@ static int __init ls_pcie_probe(struct platform_device *pdev)
 	if (!ls_pcie_is_bridge(pcie))
 		return -ENODEV;
 
-	if (of_device_is_compatible(pdev->dev.of_node, "fsl,ls2085a-pcie") ||
-	of_device_is_compatible(pdev->dev.of_node, "fsl,ls2080a-pcie") ||
+	if (of_device_is_compatible(pdev->dev.of_node, "fsl,ls2080a-pcie") ||
 	of_device_is_compatible(pdev->dev.of_node, "fsl,ls1088a-pcie")) {
 		int len;
 		const u32 *prop;
