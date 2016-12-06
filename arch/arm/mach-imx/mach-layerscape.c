@@ -12,11 +12,13 @@
 #include "common.h"
 
 static const char * const layerscape_dt_compat[] __initconst = {
-	"fsl,ls1043a",
 	"fsl,ls1012a",
+	"fsl,ls1043a",
+	"fsl,ls1046a",
 	NULL,
 };
 
 DT_MACHINE_START(LAYERSCAPE, "Freescale LAYERSCAPE")
+	.smp		= smp_ops(layerscape_smp_ops),
 	.dt_compat	= layerscape_dt_compat,
 MACHINE_END
