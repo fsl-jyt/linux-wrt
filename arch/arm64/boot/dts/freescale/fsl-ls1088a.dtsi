@@ -294,6 +294,7 @@
 		interrupts = <0 25 0x4>; /* Level high type */
 		clocks = <&clockgen 4 3>, <&clockgen 4 3>;
 		clock-names = "qspi_en", "qspi";
+		fsl,qspi-has-second-chip;
 	};
 
 	pcie@3400000 {

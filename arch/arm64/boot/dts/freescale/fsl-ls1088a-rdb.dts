@@ -91,6 +91,7 @@
 		compatible = "spansion,m25p80";
 		#address-cells = <1>;
 		#size-cells = <1>;
+		m25p,fast-read;
 		spi-max-frequency = <20000000>;
 		reg = <0>;
 	};
@@ -99,6 +100,7 @@
 		compatible = "spansion,m25p80";
 		#address-cells = <1>;
 		#size-cells = <1>;
+		m25p,fast-read;
 		spi-max-frequency = <20000000>;
 		reg = <1>;
 	};
